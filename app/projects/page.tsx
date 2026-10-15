@@ -1,14 +1,13 @@
 import Link from "next/link";
 import { PageTransition } from "@/components/layout/page-transition";
 import { Reveal } from "@/components/motion/reveal";
-import { ProjectStage } from "@/components/projects/project-stage";
+import { ScreenStrip } from "@/components/projects/screen-strip";
 import { StoreLinks } from "@/components/projects/store-links";
 import { buttonStyles } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
 import { ArrowRightIcon, ArrowUpRightIcon } from "@/components/ui/icons";
 import { PageIntro } from "@/components/ui/page-intro";
 import { projectHref, projects, publishedApps, type Project, type PublishedApp } from "@/content/projects";
-import { cn } from "@/lib/cn";
 import { pageMetadata } from "@/lib/metadata";
 
 export const metadata = pageMetadata({
@@ -67,23 +66,12 @@ export default function ProjectsPage() {
 }
 
 function ProjectFeature({ project, index }: { project: Project; index: number }) {
-  const flipped = index % 2 === 1;
   const headingId = `project-${project.slug}`;
   const href = projectHref(project.slug);
 
   return (
-    <article aria-labelledby={headingId} className="grid items-center gap-10 lg:grid-cols-12 lg:gap-14">
-      <Reveal className={cn("lg:col-span-7", flipped && "lg:order-2")}>
-        <Link href={href} tabIndex={-1} aria-hidden="true" className="group block">
-          <ProjectStage
-            project={project}
-            preload={index === 0}
-            className="transition-[transform,box-shadow] duration-500 ease-out-soft group-hover:shadow-card-hover motion-safe:group-hover:-translate-y-1"
-          />
-        </Link>
-      </Reveal>
-
-      <Reveal delay={0.08} className={cn("lg:col-span-5", flipped && "lg:order-1")}>
+    <article aria-labelledby={headingId}>
+      <Reveal>
         <div className="flex items-baseline gap-4">
           <span aria-hidden="true" className="font-mono text-small font-semibold text-accent-ink">
             {String(index + 1).padStart(2, "0")}
@@ -92,38 +80,48 @@ function ProjectFeature({ project, index }: { project: Project; index: number })
           <span className="text-small font-semibold text-muted">{project.platforms.join(" · ")}</span>
         </div>
 
-        <p className="mt-6 text-small font-semibold text-accent-ink">{project.category}</p>
-        <h2 id={headingId} className="mt-2 text-h2">
-          {project.name}
-        </h2>
-        <p className="mt-4 text-lead text-muted">{project.summary}</p>
+        <div className="mt-6 grid gap-8 lg:grid-cols-12 lg:gap-14">
+          <div className="lg:col-span-7">
+            <p className="text-small font-semibold text-accent-ink">{project.category}</p>
+            <h2 id={headingId} className="mt-2 text-h2">
+              {project.name}
+            </h2>
+            <p className="mt-4 text-lead text-muted">{project.summary}</p>
+          </div>
 
-        <ul aria-label="Highlights" className="mt-6 flex flex-wrap gap-2">
-          {project.features.slice(0, 4).map((feature) => (
-            <li key={feature} className="rounded-lg bg-accent-wash px-2.5 py-1 text-small font-medium text-fg ring-1 ring-line">
-              {feature}
-            </li>
-          ))}
-        </ul>
+          <div className="lg:col-span-5 lg:pt-7">
+            <ul aria-label="Highlights" className="flex flex-wrap gap-2">
+              {project.features.slice(0, 4).map((feature) => (
+                <li key={feature} className="rounded-lg bg-accent-wash px-2.5 py-1 text-small font-medium text-fg ring-1 ring-line">
+                  {feature}
+                </li>
+              ))}
+            </ul>
 
-        {project.outcome && (
-          <p className="mt-6 flex items-baseline gap-3 border-l-2 border-accent pl-4">
-            <span className="text-h3 font-extrabold">{project.outcome.value}</span>
-            <span className="text-small text-muted">{project.outcome.label.toLowerCase()} (approximate)</span>
-          </p>
-        )}
+            {project.outcome && (
+              <p className="mt-6 flex items-baseline gap-3 border-l-2 border-accent pl-4">
+                <span className="text-h3 font-extrabold">{project.outcome.value}</span>
+                <span className="text-small text-muted">{project.outcome.label.toLowerCase()} (approximate)</span>
+              </p>
+            )}
 
-        <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-4">
-          <Link href={href} className={buttonStyles({ variant: "primary" })}>
-            Read case study
-            <span className="sr-only">: {project.name}</span>
-            <ArrowRightIcon className="size-4" />
-          </Link>
-          <span className="flex gap-4 text-small font-semibold">
-            <StoreTextLink href={project.store.googlePlay} label="Google Play" project={project.name} />
-            <StoreTextLink href={project.store.appStore} label="App Store" project={project.name} />
-          </span>
+            <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-4">
+              <Link href={href} className={buttonStyles({ variant: "primary" })}>
+                Read case study
+                <span className="sr-only">: {project.name}</span>
+                <ArrowRightIcon className="size-4" />
+              </Link>
+              <span className="flex gap-4 text-small font-semibold">
+                <StoreTextLink href={project.store.googlePlay} label="Google Play" project={project.name} />
+                <StoreTextLink href={project.store.appStore} label="App Store" project={project.name} />
+              </span>
+            </div>
+          </div>
         </div>
+      </Reveal>
+
+      <Reveal delay={0.08} className="mt-10">
+        <ScreenStrip project={project} preload={index === 0} />
       </Reveal>
     </article>
   );

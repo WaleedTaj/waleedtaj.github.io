@@ -4,14 +4,12 @@ import { notFound } from "next/navigation";
 import type { ReactNode } from "react";
 import { PageTransition } from "@/components/layout/page-transition";
 import { Reveal } from "@/components/motion/reveal";
-import { PhoneFrame } from "@/components/projects/phone";
-import { ProjectStage, ScreenshotImage } from "@/components/projects/project-stage";
+import { ScreenStrip } from "@/components/projects/screen-strip";
 import { StoreLinks } from "@/components/projects/store-links";
 import { Container } from "@/components/ui/container";
 import { ArrowLeftIcon, ArrowRightIcon, CheckIcon } from "@/components/ui/icons";
 import { riseDelay } from "@/components/ui/page-intro";
 import { adjacentProjects, getProject, projectHref, projects, type Project } from "@/content/projects";
-import { projectScreenshots } from "@/lib/media";
 import { pageMetadata } from "@/lib/metadata";
 
 // Only the four featured projects exist; anything else is a 404.
@@ -46,52 +44,52 @@ export default async function ProjectPage({ params }: PageProps<"/projects/[slug
       <article aria-labelledby="case-title">
         {/* Hero */}
         <header className="border-b border-line bg-surface">
-          <Container className="grid gap-12 pt-10 pb-14 sm:pt-12 lg:grid-cols-12 lg:items-center lg:gap-14 lg:pb-20">
-            <div className="lg:col-span-5">
-              <nav aria-label="Breadcrumb" className="animate-rise">
-                <ol className="flex items-center gap-2 text-small font-semibold text-muted">
-                  <li>
-                    <Link href="/projects" className="inline-flex items-center gap-1.5 rounded-sm transition-colors hover:text-fg">
-                      <ArrowLeftIcon className="size-4" />
-                      Projects
-                    </Link>
-                  </li>
-                  <li aria-hidden="true">/</li>
-                  <li aria-current="page" className="font-mono text-accent-ink">
-                    {number}
-                  </li>
-                </ol>
-              </nav>
+          <Container className="pt-10 pb-14 sm:pt-12 lg:pb-20">
+            <nav aria-label="Breadcrumb" className="animate-rise">
+              <ol className="flex items-center gap-2 text-small font-semibold text-muted">
+                <li>
+                  <Link href="/projects" className="inline-flex items-center gap-1.5 rounded-sm transition-colors hover:text-fg">
+                    <ArrowLeftIcon className="size-4" />
+                    Projects
+                  </Link>
+                </li>
+                <li aria-hidden="true">/</li>
+                <li aria-current="page" className="font-mono text-accent-ink">
+                  {number}
+                </li>
+              </ol>
+            </nav>
 
-              <p className="animate-rise mt-10 text-small font-semibold text-accent-ink" style={riseDelay(60)}>
-                {project.category}
-              </p>
-              <h1 id="case-title" className="animate-rise mt-3 text-h1" style={riseDelay(100)}>
-                {project.name}
-              </h1>
-              <p className="animate-rise mt-5 text-lead text-muted" style={riseDelay(150)}>
-                {project.summary}
-              </p>
+            <div className="mt-10 grid gap-8 lg:grid-cols-12 lg:items-end lg:gap-14">
+              <div className="lg:col-span-7">
+                <p className="animate-rise text-small font-semibold text-accent-ink" style={riseDelay(60)}>
+                  {project.category}
+                </p>
+                <h1 id="case-title" className="animate-rise mt-3 text-h1" style={riseDelay(100)}>
+                  {project.name}
+                </h1>
+                <p className="animate-rise mt-5 text-lead text-muted" style={riseDelay(150)}>
+                  {project.summary}
+                </p>
+              </div>
 
-              <dl
-                className="animate-rise mt-8 grid grid-cols-2 gap-x-6 gap-y-4 border-t border-line pt-6 text-small"
-                style={riseDelay(200)}
-              >
-                <div>
-                  <dt className="text-muted">Platforms</dt>
-                  <dd className="mt-0.5 font-semibold">{project.platforms.join(" and ")}</dd>
-                </div>
-                <div>
-                  <dt className="text-muted">Company</dt>
-                  <dd className="mt-0.5 font-semibold">{project.company}</dd>
-                </div>
-              </dl>
-
-              <StoreLinks project={project} className="animate-rise mt-8" />
+              <div className="animate-rise lg:col-span-5" style={riseDelay(200)}>
+                <dl className="grid grid-cols-2 gap-x-6 gap-y-4 border-t border-line pt-6 text-small">
+                  <div>
+                    <dt className="text-muted">Platforms</dt>
+                    <dd className="mt-0.5 font-semibold">{project.platforms.join(" and ")}</dd>
+                  </div>
+                  <div>
+                    <dt className="text-muted">Company</dt>
+                    <dd className="mt-0.5 font-semibold">{project.company}</dd>
+                  </div>
+                </dl>
+                <StoreLinks project={project} className="mt-8" />
+              </div>
             </div>
 
-            <div className="animate-rise lg:col-span-7" style={riseDelay(120)}>
-              <ProjectStage project={project} preload className="bg-bg" />
+            <div className="animate-rise mt-12" style={riseDelay(250)}>
+              <ScreenStrip project={project} preload />
             </div>
           </Container>
         </header>
@@ -178,11 +176,6 @@ export default async function ProjectPage({ params }: PageProps<"/projects/[slug
           </p>
         </CaseSection>
 
-        {/* Gallery */}
-        <CaseSection label="Screens" title="Gallery" className="bg-surface">
-          <Gallery project={project} />
-        </CaseSection>
-
         {/* Stores */}
         <Container className="py-(--section-y)">
           <Reveal className="flex flex-col gap-6 rounded-panel border border-line p-8 sm:p-10 md:flex-row md:items-center md:justify-between">
@@ -254,23 +247,6 @@ function ChipRow({ term, items, strong }: { term: string; items: string[]; stron
         </ul>
       </dd>
     </div>
-  );
-}
-
-function Gallery({ project }: { project: Project }) {
-  return (
-    <ul className="grid grid-cols-2 gap-x-5 gap-y-10 sm:gap-x-8">
-      {projectScreenshots[project.slug].map((shot) => (
-        <li key={shot.src}>
-          <figure>
-            <PhoneFrame className="mx-auto max-w-[17rem]">
-              <ScreenshotImage shot={shot} sizes="(min-width: 640px) 17rem, 45vw" />
-            </PhoneFrame>
-            <figcaption className="mt-4 text-center text-small font-semibold text-muted">{shot.caption}</figcaption>
-          </figure>
-        </li>
-      ))}
-    </ul>
   );
 }
 

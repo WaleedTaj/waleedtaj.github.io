@@ -37,7 +37,7 @@ export const media = {
 } as const;
 
 export type Screenshot = ImageAsset & {
-  /** Short visible caption in the case-study gallery. */
+  /** Short visible caption under the screenshot. */
   caption: string;
 };
 
@@ -51,10 +51,9 @@ const shot = (folder: string, file: string, caption: string, alt: string): Scree
 });
 
 /**
- * Real app screenshots per project, keyed by slug and in display order: the
- * first two appear in the project stage, all of them in the case-study
- * gallery. Each project needs at least two. Only reference files that exist
- * under /public.
+ * Real app screenshots per project, keyed by slug and in display order. All
+ * of them appear in the project's screen strip, on the Projects page and at
+ * the top of its case study. Only reference files that exist under /public.
  */
 export const projectScreenshots: Record<ProjectSlug, Screenshot[]> = {
   slms360: [
