@@ -38,12 +38,18 @@ export function ScreenStrip({ project, className, preload }: ScreenStripProps) {
               <div className="@container">
                 <div className="rounded-[13cqw] bg-device p-[3cqw] ring-1 ring-line-strong/30">
                   <div className="relative overflow-hidden rounded-[10cqw]">
-                    {/* Android-style punch-hole camera, centered in the status bar where
-                        every capture is empty, so it never covers the time, icons or app bar. */}
+                    {/* Android-style punch-hole camera, about 5% of the screen width as on
+                        real phones, centered in the status bar where every capture is
+                        empty, so it never covers the time, icons or app bar. */}
                     <span
                       aria-hidden="true"
-                      className="absolute top-[3.1cqw] left-1/2 z-10 size-[3.2cqw] -translate-x-1/2 rounded-full bg-device ring-1 ring-white/10"
-                    />
+                      className="absolute top-[2.35cqw] left-1/2 z-10 grid size-[4.7cqw] -translate-x-1/2 place-items-center rounded-full bg-device ring-[0.3cqw] ring-device/40"
+                    >
+                      {/* Lens: a darker core with a faint ring and a small highlight */}
+                      <span className="relative size-[2.6cqw] rounded-full bg-[#1b1d24] ring-[0.25cqw] ring-[#2a2d36]">
+                        <span className="absolute top-[22%] left-[24%] size-[28%] rounded-full bg-white/25" />
+                      </span>
+                    </span>
                     <Image
                       src={shot.src}
                       alt={shot.alt}
