@@ -4,7 +4,7 @@
  * Screenshots live in lib/media.ts (`projectScreenshots`), keyed by the same slug.
  */
 
-export type ProjectSlug = "slms360" | "toddlers-app-staff" | "deenlink" | "bloodsync" | "service-square";
+export type ProjectSlug = "slms360" | "toddlers-app-staff" | "deenlink" | "bloodsync";
 
 export type Challenge = {
   title: string;
@@ -274,69 +274,6 @@ export const projects: Project[] = [
   },
 ];
 
-/**
- * Case studies that stay online but are no longer featured: they are linked
- * from their More Published Applications card, not the Projects showcase or
- * the next/previous cycle.
- */
-export const unlistedProjects: Project[] = [
-  {
-    slug: "service-square",
-    name: "Service Square",
-    category: "Professional Services Marketplace",
-    platforms: ["Android", "iOS"],
-    company: "Dynamic Dev Technologies",
-    summary:
-      "A multi-role marketplace connecting customers with service professionals, from discovery and requests to appointments and chat.",
-    overview: [
-      "Service Square connects customers with service professionals. Customers discover services and professionals, send requests and book appointments; professionals manage the requests that come in. Chat, notifications and service history tie the two sides together.",
-      "Because both roles share one app, much of the work involved keeping two sets of screens and responsibilities consistent while they depend on the same API-driven data.",
-    ],
-    focus:
-      "Multi-role application architecture, interconnected workflows and the API integrations behind them.",
-    features: [
-      "Role-based authentication",
-      "Service discovery",
-      "Professional profiles",
-      "Service requests",
-      "Appointments",
-      "Chat",
-      "Notifications",
-      "Service history",
-    ],
-    contributions: [
-      "Flutter feature development",
-      "Multi-role workflows",
-      "REST API integration",
-      "Authentication",
-      "Service request flows",
-      "UI development",
-      "Bug fixing",
-      "Application maintenance",
-    ],
-    challenges: [
-      {
-        title: "Role-based application flows",
-        body: "Customers and service providers have different responsibilities and interfaces, so flows had to branch cleanly by role from sign-in onward.",
-      },
-      {
-        title: "API-driven service requests",
-        body: "Implementing and maintaining service request workflows whose steps depend on each other, along with the loading, empty and error states each step needs.",
-      },
-      {
-        title: "Communication",
-        body: "Working on chat and notifications so customers and professionals stay informed as a request moves forward.",
-      },
-    ],
-    stack: ["Flutter", "Dart", "REST APIs"],
-    areas: ["Role-based auth", "Request workflows", "Chat", "Notifications"],
-    store: {
-      googlePlay: "https://play.google.com/store/apps/details?id=co.nannysquare.app",
-      appStore: "https://apps.apple.com/ng/app/services-square/id6777226346",
-    },
-  },
-];
-
 export type StoreLinks = {
   googlePlay: string;
   appStore: string;
@@ -348,8 +285,6 @@ export type PublishedApp = {
   company: string;
   /** One short, factual sentence about what the app is. */
   description: string;
-  /** The app's own case study, for apps that are no longer featured. */
-  caseStudy?: ProjectSlug;
   store: StoreLinks;
 };
 
@@ -376,7 +311,6 @@ export const publishedApps: PublishedApp[] = [
     name: "Service Square",
     company: "Dynamic Dev Technologies",
     description: "A marketplace connecting customers with service professionals, from requests to chat.",
-    caseStudy: "service-square",
     store: {
       googlePlay: "https://play.google.com/store/apps/details?id=co.nannysquare.app",
       appStore: "https://apps.apple.com/ng/app/services-square/id6777226346",
@@ -394,13 +328,12 @@ export const publishedApps: PublishedApp[] = [
 ];
 
 export function getProject(slug: string) {
-  return [...projects, ...unlistedProjects].find((project) => project.slug === slug);
+  return projects.find((project) => project.slug === slug);
 }
 
-/** The featured projects before and after `slug`, wrapping around. Null for unlisted ones. */
+/** The projects before and after `slug`, wrapping around. */
 export function adjacentProjects(slug: string) {
   const index = projects.findIndex((project) => project.slug === slug);
-  if (index === -1) return null;
   const count = projects.length;
   return {
     previous: projects[(index - 1 + count) % count],

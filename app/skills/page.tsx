@@ -14,8 +14,9 @@ import {
   SparkIcon,
   ToolsIcon,
 } from "@/components/ui/icons";
+import { BrandIcon } from "@/components/ui/brand-icons";
 import { PageIntro } from "@/components/ui/page-intro";
-import { exploring, skillGroups, type SkillGroup, type SkillIcon } from "@/content/skills";
+import { exploring, skillGroups, skillLogos, type SkillGroup, type SkillIcon } from "@/content/skills";
 import { pageMetadata } from "@/lib/metadata";
 
 export const metadata = pageMetadata({
@@ -87,7 +88,10 @@ export default function SkillsPage() {
               <ul className="flex flex-wrap content-start items-baseline gap-x-5 gap-y-3 lg:col-span-8">
                 {core.skills.map((skill, index) => (
                   <li key={skill} className="flex items-baseline gap-5 text-h3 font-bold">
-                    <span className={index < 2 ? "text-accent" : undefined}>{skill}</span>
+                    <span className={index < 2 ? "inline-flex items-center gap-2 text-accent" : undefined}>
+                      {skillLogos[skill] && <BrandIcon name={skillLogos[skill]} className="size-[0.85em]" />}
+                      {skill}
+                    </span>
                     {index < core.skills.length - 1 && (
                       <span aria-hidden="true" className="font-normal opacity-30">
                         /
@@ -173,7 +177,11 @@ function GroupRow({ group, number }: { group: SkillGroup; number: number }) {
         <ul className="grid grid-cols-1 content-start gap-x-8 min-[30rem]:grid-cols-2 sm:grid-cols-3 lg:col-span-8">
           {group.skills.map((skill) => (
             <li key={skill} className="flex items-center gap-3 border-b border-line/70 py-2.5 font-semibold">
-              <span aria-hidden="true" className="size-1.5 shrink-0 rounded-full bg-accent-ink" />
+              {skillLogos[skill] ? (
+                <BrandIcon name={skillLogos[skill]} className="size-4 shrink-0 text-accent-ink" />
+              ) : (
+                <span aria-hidden="true" className="size-1.5 shrink-0 rounded-full bg-accent-ink" />
+              )}
               {skill}
             </li>
           ))}

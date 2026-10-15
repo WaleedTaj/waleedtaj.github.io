@@ -1,3 +1,5 @@
+import type { BrandIconName } from "@/components/ui/brand-icons";
+
 /** Technical skills from the résumé, grouped by what they cover. */
 
 export type SkillIcon = "mobile" | "layers" | "plug" | "spark" | "database" | "pin" | "tools" | "compass";
@@ -90,6 +92,33 @@ export const skillGroups: SkillGroup[] = [
       "Performance Optimization",
     ],
   },
+];
+
+/** Logos for skills that are a single, recognizable tool. Others show a plain marker. */
+export const skillLogos: Partial<Record<string, BrandIconName>> = {
+  Flutter: "flutter",
+  Dart: "dart",
+  "Hugging Face (Llama 3)": "huggingface",
+  "Google Cloud": "googlecloud",
+  Firebase: "firebase",
+  SQLite: "sqlite",
+  "Google Maps": "googlemaps",
+  Git: "git",
+  GitHub: "github",
+  "Android Studio": "androidstudio",
+  Xcode: "xcode",
+  Postman: "postman",
+  "Google Play Console": "googleplay",
+  "App Store Connect": "appstore",
+};
+
+/** The core stack, shown with logos on the About page. */
+export const coreStack: { name: string; logo: BrandIconName }[] = [
+  { name: "Flutter", logo: "flutter" },
+  { name: "Dart", logo: "dart" },
+  { name: "Firebase", logo: "firebase" },
+  { name: "Android", logo: "android" },
+  { name: "iOS", logo: "apple" },
 ];
 
 /** Being learned now. Shown separately and never as production expertise. */

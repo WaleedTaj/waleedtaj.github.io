@@ -53,10 +53,10 @@ const shot = (folder: string, file: string, caption: string, alt: string): Scree
 /**
  * Real app screenshots per project, keyed by slug and in display order: the
  * first two appear in the project stage, all of them in the case-study
- * gallery. Featured projects must have at least two; unlisted case studies
- * may have none. Only reference files that exist under /public.
+ * gallery. Each project needs at least two. Only reference files that exist
+ * under /public.
  */
-export const projectScreenshots: Partial<Record<ProjectSlug, Screenshot[]>> = {
+export const projectScreenshots: Record<ProjectSlug, Screenshot[]> = {
   slms360: [
     shot("SLMS360", "Home.jpeg", "Home", "SLMS360 home screen with attendance, salary, voucher and project management modules"),
     shot("SLMS360", "Mark Attendance.jpeg", "Mark attendance", "SLMS360 attendance screen with check-in, check-out and total hours"),

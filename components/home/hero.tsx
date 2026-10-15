@@ -4,7 +4,9 @@ import { Container } from "@/components/ui/container";
 import { ArrowRightIcon, MapPinIcon } from "@/components/ui/icons";
 import { riseDelay } from "@/components/ui/page-intro";
 import { ResumeButton } from "@/components/ui/resume-button";
+import { BrandIcon } from "@/components/ui/brand-icons";
 import { experience } from "@/content/experience";
+import { coreStack } from "@/content/skills";
 import { projects, publishedApps } from "@/content/projects";
 import { media } from "@/lib/media";
 import { site } from "@/lib/site";
@@ -35,12 +37,9 @@ export function Hero() {
           </p>
 
           <h1 id="hero-title" className="mt-8">
-            <span className="animate-rise block text-h3 font-bold text-muted" style={riseDelay(60)}>
-              <span className="text-fg">{site.name}</span>
-              <span className="sr-only">, </span>
-              <span aria-hidden="true" className="mx-2 text-accent-ink">
-                /
-              </span>
+            <span className="animate-rise block text-h3 font-bold text-fg" style={riseDelay(60)}>
+              {/* The name is visible on the portrait; screen readers still get it here. */}
+              <span className="sr-only">{site.name}, </span>
               {site.role}
             </span>
             <span className="animate-rise mt-4 block max-w-[16ch] text-display" style={riseDelay(120)}>
@@ -82,6 +81,21 @@ export function Hero() {
               </div>
             ))}
           </dl>
+
+          <div className="animate-rise mt-8 flex flex-wrap items-center gap-x-4 gap-y-3" style={riseDelay(340)}>
+            <h2 className="text-eyebrow text-muted uppercase">Core stack</h2>
+            <ul className="flex flex-wrap gap-2">
+              {coreStack.map((tool) => (
+                <li
+                  key={tool.name}
+                  className="inline-flex items-center gap-2 rounded-lg border border-line bg-bg px-3 py-1.5 text-small font-semibold text-fg"
+                >
+                  <BrandIcon name={tool.logo} className="size-4 text-accent-ink" />
+                  {tool.name}
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
 
         <Portrait currentCompany={current?.organization} />

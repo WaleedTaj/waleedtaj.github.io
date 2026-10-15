@@ -16,7 +16,7 @@ type Composition = {
  * Every project shares the gold accent; the layout and the screenshots are
  * what set them apart.
  */
-const compositions: Partial<Record<ProjectSlug, Composition>> = {
+const compositions: Record<ProjectSlug, Composition> = {
   // Institutional dashboard: upright, side by side, on a measured grid.
   slms360: {
     primary: "left-[13%] top-[11%] w-[35%]",
@@ -62,15 +62,13 @@ type ProjectStageProps = {
 };
 
 /**
- * Wide visual for a featured project: its first two real screenshots in device frames.
+ * Wide visual for a project: its first two real screenshots in device frames.
  * Decorative (the case-study gallery describes each screenshot), so it is
  * hidden from assistive technology.
  */
 export function ProjectStage({ project, className, preload }: ProjectStageProps) {
   const composition = compositions[project.slug];
-  const [primary, secondary] = projectScreenshots[project.slug] ?? [];
-  // Unlisted case studies may have no screenshots; they render without a stage.
-  if (!composition || !primary || !secondary) return null;
+  const [primary, secondary] = projectScreenshots[project.slug];
 
   return (
     <div

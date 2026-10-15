@@ -7,7 +7,7 @@ import { buttonStyles } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
 import { ArrowRightIcon, ArrowUpRightIcon } from "@/components/ui/icons";
 import { PageIntro } from "@/components/ui/page-intro";
-import { getProject, projectHref, projects, publishedApps, type Project, type PublishedApp } from "@/content/projects";
+import { projectHref, projects, publishedApps, type Project, type PublishedApp } from "@/content/projects";
 import { cn } from "@/lib/cn";
 import { pageMetadata } from "@/lib/metadata";
 
@@ -38,7 +38,7 @@ export default function ProjectsPage() {
           aside={
             <dl className="grid grid-cols-3 gap-4 border-t border-line pt-6 lg:grid-cols-1 lg:border-t-0 lg:border-l lg:pt-0 lg:pl-8">
               {[
-                [String(projects.length + publishedApps.length), "published apps"],
+                [`${projects.length + publishedApps.length}+`, "published apps"],
                 [String(projects.length), "detailed case studies"],
                 [String(companies.size), "companies"],
               ].map(([value, label]) => (
@@ -180,7 +180,6 @@ function MoreApps() {
 }
 
 function AppCard({ app }: { app: PublishedApp }) {
-  const caseStudy = app.caseStudy && getProject(app.caseStudy);
   // Initials from the name before any subtitle: "MyFable: …" → "M".
   const initials = app.name
     .split(":")[0]
@@ -202,14 +201,6 @@ function AppCard({ app }: { app: PublishedApp }) {
       <p className="mt-1 text-small text-muted">{app.company}</p>
       <p className="mt-4 text-small text-muted">{app.description}</p>
 
-      {caseStudy && (
-        <Link
-          href={projectHref(caseStudy.slug)}
-          className="mt-3 w-fit rounded-sm text-small font-semibold text-muted underline decoration-line-strong underline-offset-4 hover:text-fg"
-        >
-          Read case study<span className="sr-only">: {caseStudy.name}</span>
-        </Link>
-      )}
 
       <StoreLinks project={app} size="sm" className="mt-auto flex-col gap-2 pt-6 [&_a]:w-full" />
     </article>
