@@ -12,8 +12,9 @@ type ScreenStripProps = {
 
 /**
  * A project's real screenshots side by side, each in a plain phone frame: a
- * slim near-black bezel whose screen has the captures' exact 9:20 shape, so
- * nothing is cropped and the real status bar stays visible. Sizes are in
+ * slim near-black bezel with an Android punch-hole camera, whose screen has
+ * the captures' exact 9:20 shape, so nothing is cropped and the real status
+ * bar stays visible. Sizes are in
  * cqw, so the bezel scales with the phone. Four across from lg up, where each
  * phone is at most ~270px wide (the 540px captures stay sharp at 2×). Below lg the row
  * scrolls sideways with snap points and a peek at the next screen; the
@@ -36,7 +37,13 @@ export function ScreenStrip({ project, className, preload }: ScreenStripProps) {
             <figure>
               <div className="@container">
                 <div className="rounded-[13cqw] bg-device p-[3cqw] ring-1 ring-line-strong/30">
-                  <div className="overflow-hidden rounded-[10cqw]">
+                  <div className="relative overflow-hidden rounded-[10cqw]">
+                    {/* Android-style punch-hole camera, centered in the status bar where
+                        every capture is empty, so it never covers the time, icons or app bar. */}
+                    <span
+                      aria-hidden="true"
+                      className="absolute top-[3.1cqw] left-1/2 z-10 size-[3.2cqw] -translate-x-1/2 rounded-full bg-device ring-1 ring-white/10"
+                    />
                     <Image
                       src={shot.src}
                       alt={shot.alt}
