@@ -20,6 +20,8 @@
   --accent: #ffdb70;
   --accent-2: #ffe28d;
   --on-accent: #222222;
+  /* Phone bezel around app screenshots: near-black, like the real device */
+  --device: #111113;
 
   /* Light theme */
   /* Warm off-white rather than pure white, to sit with the gold */
@@ -102,6 +104,7 @@
   --color-accent-ink: var(--accent-ink);
   --color-accent-wash: var(--accent-wash);
   --color-on-accent: var(--on-accent);
+  --color-device: var(--device);
 
   /* Fixed white, e.g. behind the portrait photo */
   --color-white: #ffffff;

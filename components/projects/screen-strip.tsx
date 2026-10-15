@@ -11,9 +11,11 @@ type ScreenStripProps = {
 };
 
 /**
- * A project's real screenshots side by side, shown as captured: no device
- * frame, just a hairline border. Four across from lg up, where each is at
- * most ~270px wide (the 540px captures stay sharp at 2×). Below lg the row
+ * A project's real screenshots side by side, each in a plain phone frame: a
+ * slim near-black bezel whose screen has the captures' exact 9:20 shape, so
+ * nothing is cropped and the real status bar stays visible. Sizes are in
+ * cqw, so the bezel scales with the phone. Four across from lg up, where each
+ * phone is at most ~270px wide (the 540px captures stay sharp at 2×). Below lg the row
  * scrolls sideways with snap points and a peek at the next screen; the
  * region is focusable so the arrow keys can scroll it.
  */
@@ -32,15 +34,21 @@ export function ScreenStrip({ project, className, preload }: ScreenStripProps) {
         {projectScreenshots[project.slug].map((shot) => (
           <li key={shot.src} className="w-[78%] max-w-[16rem] shrink-0 snap-start lg:w-auto lg:max-w-none">
             <figure>
-              <Image
-                src={shot.src}
-                alt={shot.alt}
-                width={shot.width}
-                height={shot.height}
-                preload={preload}
-                sizes="(min-width: 1024px) 17rem, 78vw"
-                className="h-auto w-full rounded-lg border border-line"
-              />
+              <div className="@container">
+                <div className="rounded-[13cqw] bg-device p-[3cqw] ring-1 ring-line-strong/30">
+                  <div className="overflow-hidden rounded-[10cqw]">
+                    <Image
+                      src={shot.src}
+                      alt={shot.alt}
+                      width={shot.width}
+                      height={shot.height}
+                      preload={preload}
+                      sizes="(min-width: 1024px) 16rem, 74vw"
+                      className="block h-auto w-full"
+                    />
+                  </div>
+                </div>
+              </div>
               <figcaption className="mt-3 text-small font-semibold text-muted">{shot.caption}</figcaption>
             </figure>
           </li>
