@@ -14,12 +14,12 @@ import { pageMetadata } from "@/lib/metadata";
 export const metadata = pageMetadata({
   title: "Projects",
   description:
-    "Flutter apps by Waleed Mehmood on Google Play and the App Store: case studies of SLMS360, Toddlers App Staff, DeenLink and Service Square, plus SLMS360 Student, Toddlers App, BloodSync and MyFable.",
+    "Flutter apps by Waleed Mehmood on Google Play and the App Store: case studies of SLMS360, Toddlers App Staff, DeenLink and BloodSync, plus SLMS360 Student, Toddlers App, Service Square and MyFable.",
   path: "/projects",
 });
 
 export default function ProjectsPage() {
-  const companies = new Set(projects.map((project) => project.company));
+  const companies = new Set([...projects, ...publishedApps].map((app) => app.company));
 
   return (
     <PageTransition>
@@ -30,8 +30,8 @@ export default function ProjectsPage() {
           title="Four apps, four very different problems."
           lead={
             <p>
-              Institutional operations, childcare, offline religious content and a two-sided service
-              marketplace. Each case study covers what the app does, what I worked on and the technical
+              Institutional operations, childcare, offline religious content and blood donation. Each
+              case study covers what the app does, what I worked on and the technical
               challenges along the way.
             </p>
           }
@@ -180,7 +180,7 @@ function MoreApps() {
 }
 
 function AppCard({ app }: { app: PublishedApp }) {
-  const related = app.related && getProject(app.related);
+  const caseStudy = app.caseStudy && getProject(app.caseStudy);
   // Initials from the name before any subtitle: "MyFable: …" → "M".
   const initials = app.name
     .split(":")[0]
@@ -200,19 +200,15 @@ function AppCard({ app }: { app: PublishedApp }) {
       </span>
       <h3 className="mt-5 text-[1.125rem] leading-snug font-bold">{app.name}</h3>
       <p className="mt-1 text-small text-muted">{app.company}</p>
+      <p className="mt-4 text-small text-muted">{app.description}</p>
 
-      {(app.tag || related) && (
-        <p className="mt-4 flex flex-wrap gap-2 text-small">
-          {app.tag && <span className="rounded-md bg-accent-wash px-2 py-0.5 font-semibold text-fg">{app.tag}</span>}
-          {related && (
-            <Link
-              href={projectHref(related.slug)}
-              className="rounded-sm font-semibold text-muted underline decoration-line-strong underline-offset-4 hover:text-fg"
-            >
-              Related: {related.name}
-            </Link>
-          )}
-        </p>
+      {caseStudy && (
+        <Link
+          href={projectHref(caseStudy.slug)}
+          className="mt-3 w-fit rounded-sm text-small font-semibold text-muted underline decoration-line-strong underline-offset-4 hover:text-fg"
+        >
+          Read case study<span className="sr-only">: {caseStudy.name}</span>
+        </Link>
       )}
 
       <StoreLinks project={app} size="sm" className="mt-auto flex-col gap-2 pt-6 [&_a]:w-full" />

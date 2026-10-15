@@ -1,10 +1,10 @@
 /**
- * Featured projects and their case studies. Everything here comes from
+ * Featured projects and their case studies, in showcase order. Everything here comes from
  * verified project information; leave optional fields out rather than guess.
  * Screenshots live in lib/media.ts (`projectScreenshots`), keyed by the same slug.
  */
 
-export type ProjectSlug = "slms360" | "toddlers-app-staff" | "deenlink" | "service-square";
+export type ProjectSlug = "slms360" | "toddlers-app-staff" | "deenlink" | "bloodsync" | "service-square";
 
 export type Challenge = {
   title: string;
@@ -217,6 +217,70 @@ export const projects: Project[] = [
     },
   },
   {
+    slug: "bloodsync",
+    name: "BloodSync",
+    category: "Health · Blood Donation",
+    platforms: ["Android", "iOS"],
+    company: "Brainstormer Technologies",
+    summary:
+      "A blood donation app that connects people who need blood with voluntary donors nearby, through requests, donor search and notifications.",
+    overview: [
+      "BloodSync connects people who need blood with voluntary donors in their area. Donors register their blood group, location and availability. People looking for blood post requests, or search for nearby donors by blood group, location and urgency.",
+      "Finding a suitable donor quickly is hard, especially when the need is urgent. The app brings requests, nearby donors and availability together around a map, and notifies users as requests and availability change. Its blood-group information helps narrow the search to potentially compatible donors; it is guidance, not a medical compatibility check.",
+    ],
+    focus:
+      "Location-aware, time-sensitive features: map-based donor discovery, blood requests and the notifications that keep donors and seekers informed.",
+    features: [
+      "Donor registration",
+      "Blood requests",
+      "Nearby donor search",
+      "Blood group compatibility guidance",
+      "Donor availability",
+      "Request notifications",
+      "Map-based home screen",
+      "Blood donation instructions",
+      "Secure handling of user data",
+    ],
+    contributions: [
+      "Flutter feature development",
+      "Donor registration and blood request flows",
+      "UI development",
+      "Google Maps integration",
+      "Nearby donor search",
+      "Notifications",
+      "Bug fixing and maintenance",
+      "Store release support",
+    ],
+    challenges: [
+      {
+        title: "Location-based donor discovery",
+        body: "Showing nearby donors on a map, and letting people narrow the search by blood group, location and urgency, so the most relevant donors are easy to find.",
+      },
+      {
+        title: "Time-sensitive requests",
+        body: "Blood requests matter most when they are urgent, so the request flow and its notifications have to keep donors and seekers up to date as things change.",
+      },
+      {
+        title: "Guidance without overpromising",
+        body: "Presenting blood-group compatibility as a helpful starting point for the search, without suggesting the app replaces a medical check.",
+      },
+    ],
+    stack: ["Flutter", "Dart", "Google Maps"],
+    areas: ["Maps and location", "Blood requests", "Notifications", "Donor availability"],
+    store: {
+      googlePlay: "https://play.google.com/store/apps/details?id=com.brainstormertech.blood_sync",
+      appStore: "https://apps.apple.com/us/app/blood-sync-app/id6754638842",
+    },
+  },
+];
+
+/**
+ * Case studies that stay online but are no longer featured: they are linked
+ * from their More Published Applications card, not the Projects showcase or
+ * the next/previous cycle.
+ */
+export const unlistedProjects: Project[] = [
+  {
     slug: "service-square",
     name: "Service Square",
     category: "Professional Services Marketplace",
@@ -282,10 +346,10 @@ export type StoreLinks = {
 export type PublishedApp = {
   name: string;
   company: string;
-  /** Short factual label. Omit unless the app's purpose is confirmed. */
-  tag?: string;
-  /** Related featured case study, when the app belongs to the same product. */
-  related?: ProjectSlug;
+  /** One short, factual sentence about what the app is. */
+  description: string;
+  /** The app's own case study, for apps that are no longer featured. */
+  caseStudy?: ProjectSlug;
   store: StoreLinks;
 };
 
@@ -293,7 +357,7 @@ export const publishedApps: PublishedApp[] = [
   {
     name: "SLMS360 Student",
     company: "Brainstormer Technologies",
-    related: "slms360",
+    description: "The student app of the SLMS360 institutional management platform.",
     store: {
       googlePlay: "https://play.google.com/store/apps/details?id=com.brainstormertech.slms360student&hl=en",
       appStore: "https://apps.apple.com/us/app/slms360-student/id6746668474",
@@ -302,24 +366,26 @@ export const publishedApps: PublishedApp[] = [
   {
     name: "Toddlers App",
     company: "Brainstormer Technologies",
-    related: "toddlers-app-staff",
+    description: "A childcare app from the same platform as Toddlers App Staff.",
     store: {
       googlePlay: "https://play.google.com/store/apps/details?id=com.brainstormers.toddlers",
       appStore: "https://apps.apple.com/us/app/toddlersapp/id6670381835",
     },
   },
   {
-    name: "BloodSync",
-    company: "Brainstormer Technologies",
+    name: "Service Square",
+    company: "Dynamic Dev Technologies",
+    description: "A marketplace connecting customers with service professionals, from requests to chat.",
+    caseStudy: "service-square",
     store: {
-      googlePlay: "https://play.google.com/store/apps/details?id=com.brainstormertech.blood_sync",
-      appStore: "https://apps.apple.com/us/app/blood-sync-app/id6754638842",
+      googlePlay: "https://play.google.com/store/apps/details?id=co.nannysquare.app",
+      appStore: "https://apps.apple.com/ng/app/services-square/id6777226346",
     },
   },
   {
     name: "MyFable: Personalise AI Story",
     company: "Brainstormer Technologies",
-    tag: "AI story generation",
+    description: "An app that generates personalized AI stories.",
     store: {
       googlePlay: "https://play.google.com/store/apps/details?id=com.brainstormertech.fable_ai",
       appStore: "https://apps.apple.com/us/app/myfable-personalise-ai-story/id6752928766",
@@ -328,12 +394,13 @@ export const publishedApps: PublishedApp[] = [
 ];
 
 export function getProject(slug: string) {
-  return projects.find((project) => project.slug === slug);
+  return [...projects, ...unlistedProjects].find((project) => project.slug === slug);
 }
 
-/** The projects before and after `slug`, wrapping around. */
+/** The featured projects before and after `slug`, wrapping around. Null for unlisted ones. */
 export function adjacentProjects(slug: string) {
   const index = projects.findIndex((project) => project.slug === slug);
+  if (index === -1) return null;
   const count = projects.length;
   return {
     previous: projects[(index - 1 + count) % count],

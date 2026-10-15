@@ -10,15 +10,15 @@ import { StoreLinks } from "@/components/projects/store-links";
 import { Container } from "@/components/ui/container";
 import { ArrowLeftIcon, ArrowRightIcon, CheckIcon } from "@/components/ui/icons";
 import { riseDelay } from "@/components/ui/page-intro";
-import { adjacentProjects, getProject, projectHref, projects, type Project } from "@/content/projects";
+import { adjacentProjects, getProject, projectHref, projects, unlistedProjects, type Project } from "@/content/projects";
 import { projectScreenshots } from "@/lib/media";
 import { pageMetadata } from "@/lib/metadata";
 
-// Only the four featured projects exist; anything else is a 404.
+// Featured and unlisted case studies only; anything else is a 404.
 export const dynamicParams = false;
 
 export function generateStaticParams() {
-  return projects.map((project) => ({ slug: project.slug }));
+  return [...projects, ...unlistedProjects].map((project) => ({ slug: project.slug }));
 }
 
 export async function generateMetadata({ params }: PageProps<"/projects/[slug]">): Promise<Metadata> {
@@ -38,8 +38,10 @@ export default async function ProjectPage({ params }: PageProps<"/projects/[slug
   const project = getProject(slug);
   if (!project) notFound();
 
-  const { previous, next } = adjacentProjects(project.slug);
-  const number = String(projects.indexOf(project) + 1).padStart(2, "0");
+  // Null for unlisted case studies, which sit outside the featured cycle.
+  const adjacent = adjacentProjects(project.slug);
+  const number = adjacent ? String(projects.indexOf(project) + 1).padStart(2, "0") : null;
+  const screenshots = projectScreenshots[project.slug] ?? [];
 
   return (
     <PageTransition>
@@ -47,7 +49,7 @@ export default async function ProjectPage({ params }: PageProps<"/projects/[slug
         {/* Hero */}
         <header className="border-b border-line bg-surface">
           <Container className="grid gap-12 pt-10 pb-14 sm:pt-12 lg:grid-cols-12 lg:items-center lg:gap-14 lg:pb-20">
-            <div className="lg:col-span-5">
+            <div className={screenshots.length >= 2 ? "lg:col-span-5" : "lg:col-span-8"}>
               <nav aria-label="Breadcrumb" className="animate-rise">
                 <ol className="flex items-center gap-2 text-small font-semibold text-muted">
                   <li>
@@ -57,8 +59,8 @@ export default async function ProjectPage({ params }: PageProps<"/projects/[slug
                     </Link>
                   </li>
                   <li aria-hidden="true">/</li>
-                  <li aria-current="page" className="font-mono text-accent-ink">
-                    {number}
+                  <li aria-current="page" className={number ? "font-mono text-accent-ink" : "text-accent-ink"}>
+                    {number ?? project.name}
                   </li>
                 </ol>
               </nav>
@@ -90,9 +92,11 @@ export default async function ProjectPage({ params }: PageProps<"/projects/[slug
               <StoreLinks project={project} className="animate-rise mt-8" />
             </div>
 
-            <div className="animate-rise lg:col-span-7" style={riseDelay(120)}>
-              <ProjectStage project={project} preload className="bg-bg" />
-            </div>
+            {screenshots.length >= 2 && (
+              <div className="animate-rise lg:col-span-7" style={riseDelay(120)}>
+                <ProjectStage project={project} preload className="bg-bg" />
+              </div>
+            )}
           </Container>
         </header>
 
@@ -179,9 +183,11 @@ export default async function ProjectPage({ params }: PageProps<"/projects/[slug
         </CaseSection>
 
         {/* Gallery */}
-        <CaseSection label="Screens" title="Gallery" className="bg-surface">
-          <Gallery project={project} />
-        </CaseSection>
+        {screenshots.length > 0 && (
+          <CaseSection label="Screens" title="Gallery" className="bg-surface">
+            <Gallery project={project} />
+          </CaseSection>
+        )}
 
         {/* Stores */}
         <Container className="py-(--section-y)">
@@ -197,10 +203,19 @@ export default async function ProjectPage({ params }: PageProps<"/projects/[slug
 
       {/* Other projects */}
       <nav aria-label="More projects" className="border-t border-line">
-        <Container className="grid gap-4 py-12 sm:grid-cols-2 sm:gap-6">
-          <AdjacentLink project={previous} direction="previous" />
-          <AdjacentLink project={next} direction="next" />
-        </Container>
+        {adjacent ? (
+          <Container className="grid gap-4 py-12 sm:grid-cols-2 sm:gap-6">
+            <AdjacentLink project={adjacent.previous} direction="previous" />
+            <AdjacentLink project={adjacent.next} direction="next" />
+          </Container>
+        ) : (
+          <Container className="py-12">
+            <Link href="/projects" className="inline-flex items-center gap-2 rounded-sm font-semibold text-muted transition-colors hover:text-fg">
+              <ArrowLeftIcon className="size-4" />
+              All projects
+            </Link>
+          </Container>
+        )}
       </nav>
     </PageTransition>
   );
@@ -260,7 +275,7 @@ function ChipRow({ term, items, strong }: { term: string; items: string[]; stron
 function Gallery({ project }: { project: Project }) {
   return (
     <ul className="grid grid-cols-2 gap-x-5 gap-y-10 sm:gap-x-8">
-      {projectScreenshots[project.slug].map((shot) => (
+      {(projectScreenshots[project.slug] ?? []).map((shot) => (
         <li key={shot.src}>
           <figure>
             <PhoneFrame className="mx-auto max-w-[17rem]">

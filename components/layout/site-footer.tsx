@@ -22,7 +22,8 @@ export function SiteFooter() {
             {site.name}
           </p>
           <p className="mt-3 text-muted">
-            {site.role} in {site.location}, building and maintaining Android and iOS apps with Flutter.
+            {site.role} building scalable Android and iOS applications, from intuitive interfaces to complex
+            business solutions.
           </p>
         </div>
 
@@ -45,6 +46,12 @@ export function SiteFooter() {
             <li>
               <a href={`mailto:${site.email}`} className={`${linkClass} break-all`}>
                 {site.email}
+              </a>
+            </li>
+            <li>
+              <a href={site.whatsapp.href} target="_blank" rel="noopener noreferrer" className={linkClass}>
+                WhatsApp <span className="font-medium">{site.whatsapp.display}</span>
+                <span className="sr-only"> (opens in a new tab)</span>
               </a>
             </li>
             <li>

@@ -16,7 +16,7 @@ type Composition = {
  * Every project shares the gold accent; the layout and the screenshots are
  * what set them apart.
  */
-const compositions: Record<ProjectSlug, Composition> = {
+const compositions: Partial<Record<ProjectSlug, Composition>> = {
   // Institutional dashboard: upright, side by side, on a measured grid.
   slms360: {
     primary: "left-[13%] top-[11%] w-[35%]",
@@ -44,11 +44,13 @@ const compositions: Record<ProjectSlug, Composition> = {
       <span className="absolute top-[7%] left-[24%] h-[110%] w-[54%] rounded-t-full border border-accent-ink/30 bg-accent-wash" />
     ),
   },
-  // Marketplace: two phones across a divider.
-  "service-square": {
-    primary: "left-[10%] top-[16%] w-[34%]",
-    secondary: "left-[54%] top-[9%] w-[34%]",
-    decor: <span className="absolute inset-y-0 left-1/2 w-px bg-line-strong/40" />,
+  // Donor app: two phones staggered over one large disc.
+  bloodsync: {
+    primary: "left-[12%] top-[9%] w-[35%]",
+    secondary: "left-[53%] top-[17%] w-[35%]",
+    decor: (
+      <span className="absolute top-[14%] left-1/2 aspect-square w-[78%] -translate-x-1/2 rounded-full bg-accent-wash" />
+    ),
   },
 };
 
@@ -60,13 +62,15 @@ type ProjectStageProps = {
 };
 
 /**
- * Wide visual for a project: its first two real screenshots in device frames.
+ * Wide visual for a featured project: its first two real screenshots in device frames.
  * Decorative (the case-study gallery describes each screenshot), so it is
  * hidden from assistive technology.
  */
 export function ProjectStage({ project, className, preload }: ProjectStageProps) {
   const composition = compositions[project.slug];
-  const [primary, secondary] = projectScreenshots[project.slug];
+  const [primary, secondary] = projectScreenshots[project.slug] ?? [];
+  // Unlisted case studies may have no screenshots; they render without a stage.
+  if (!composition || !primary || !secondary) return null;
 
   return (
     <div

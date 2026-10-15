@@ -53,9 +53,10 @@ const shot = (folder: string, file: string, caption: string, alt: string): Scree
 /**
  * Real app screenshots per project, keyed by slug and in display order: the
  * first two appear in the project stage, all of them in the case-study
- * gallery. Only reference files that exist under /public.
+ * gallery. Featured projects must have at least two; unlisted case studies
+ * may have none. Only reference files that exist under /public.
  */
-export const projectScreenshots: Record<ProjectSlug, Screenshot[]> = {
+export const projectScreenshots: Partial<Record<ProjectSlug, Screenshot[]>> = {
   slms360: [
     shot("SLMS360", "Home.jpeg", "Home", "SLMS360 home screen with attendance, salary, voucher and project management modules"),
     shot("SLMS360", "Mark Attendance.jpeg", "Mark attendance", "SLMS360 attendance screen with check-in, check-out and total hours"),
@@ -74,16 +75,10 @@ export const projectScreenshots: Record<ProjectSlug, Screenshot[]> = {
     shot("DeenLink", "Quran.jpeg", "Quran index", "DeenLink Quran index by parah, with surah and saved tabs"),
     shot("DeenLink", "Leaderboard.jpeg", "Leaderboard", "DeenLink Tasbeeh leaderboard with weekly and monthly rankings"),
   ],
-  // Screen areas cropped from the supplied device renders (Service Square/*.png),
-  // so they sit in the same frame as the others. The originals are unchanged.
-  "service-square": [
-    { ...serviceSquare("Home.png"), caption: "Home", alt: "Service Square home screen with requests, engagements, chat and history" },
-    { ...serviceSquare("Find Services.png"), caption: "Find services", alt: "Service Square search results listing service providers with ratings and rates" },
-    { ...serviceSquare("Pending Requests.png"), caption: "Pending requests", alt: "Service Square list of pending requests" },
-    { ...serviceSquare("Chat.png"), caption: "Chat", alt: "Service Square chat conversation" },
+  bloodsync: [
+    shot("Blood Sync", "Home.jpeg", "Home", "BloodSync home screen with a map of nearby donors, donation status and a Request Blood button"),
+    shot("Blood Sync", "User Selection.jpeg", "Donor or seeker", "BloodSync screen for choosing to become a donor or look for a donor"),
+    shot("Blood Sync", "Drawer.jpeg", "Menu", "BloodSync menu with profile, my requests, become a donor and instructions"),
+    shot("Blood Sync", "Instructions.jpeg", "Instructions", "BloodSync blood donation instructions covering responsibilities, principles and materials"),
   ],
 };
-
-function serviceSquare(file: string) {
-  return { src: publicPath(`/images/Service Square/Screens/${file}`), width: 166, height: 336 };
-}

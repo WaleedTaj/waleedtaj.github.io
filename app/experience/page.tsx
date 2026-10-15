@@ -148,7 +148,7 @@ function Role({ entry, last }: { entry: ExperienceEntry; last: boolean }) {
           <ul className="mt-3 grid gap-x-8 md:grid-cols-2">
             {entry.highlights.map((highlight) => (
               <li key={highlight} className="flex gap-3 border-b border-line py-3 text-muted">
-                <span aria-hidden="true" className="mt-[0.75rem] h-px w-3 shrink-0 bg-accent-ink" />
+                <span aria-hidden="true" className="bullet" />
                 {highlight}
               </li>
             ))}
