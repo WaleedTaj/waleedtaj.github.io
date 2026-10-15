@@ -1,12 +1,17 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  // Static export for GitHub Pages (https://waleedtaj.github.io/).
+  // Served from the domain root as a user site, so no basePath is needed.
+  output: "export",
+  trailingSlash: true,
+  images: {
+    // The default image optimizer needs a server; serve images as-is.
+    unoptimized: true,
+  },
   experimental: {
     agentFeedback: true,
   },
-  cacheComponents: true,
-  partialPrefetching: true,
   turbopack: {
     rules: {
       "*.css": {
