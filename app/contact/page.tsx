@@ -12,6 +12,7 @@ import {
   LinkedInIcon,
   MailIcon,
   MapPinIcon,
+  WhatsAppIcon,
 } from "@/components/ui/icons";
 import { riseDelay } from "@/components/ui/page-intro";
 import { mailto, site } from "@/lib/site";
@@ -20,7 +21,7 @@ import { pageMetadata } from "@/lib/metadata";
 export const metadata = pageMetadata({
   title: "Contact",
   description:
-    "Contact Waleed Mehmood, Flutter developer in Lahore, Pakistan, about Flutter development opportunities by email, LinkedIn or GitHub.",
+    "Contact Waleed Mehmood, Flutter developer in Lahore, Pakistan, about on-site, hybrid or remote Flutter roles by email, WhatsApp, LinkedIn or GitHub.",
   path: "/contact",
 });
 
@@ -104,16 +105,27 @@ export default function ContactPage() {
                 ))}
               </ol>
             </Reveal>
-            <p className="flex items-center gap-2 text-small text-muted sm:col-span-2">
-              <MapPinIcon className="size-4" />
-              Based in {site.location} (PKT, UTC+5)
-            </p>
+            <div className="flex items-start gap-2 text-small text-muted sm:col-span-2">
+              <MapPinIcon className="mt-0.5 size-4 shrink-0" />
+              <p>
+                Based in {site.location} (PKT, UTC+5).{" "}
+                <span className="font-semibold text-fg">{site.workPreference}</span>
+              </p>
+            </div>
           </div>
 
           {/* Other channels */}
           <Reveal delay={0.1} className="lg:col-span-5">
             <h2 className="sr-only">Other ways to connect</h2>
             <ul className="divide-y divide-line overflow-hidden rounded-panel border border-line">
+              <Channel
+                href={site.whatsapp.href}
+                external
+                icon={<WhatsAppIcon className="size-5" />}
+                title="WhatsApp"
+                detail={site.whatsapp.display}
+                detailLabel="WhatsApp number"
+              />
               <Channel
                 href={site.linkedin.href}
                 external
@@ -148,11 +160,13 @@ type ChannelProps = {
   icon: ReactNode;
   title: string;
   detail: string;
+  /** Accessible prefix for `detail`, e.g. "WhatsApp number". */
+  detailLabel?: string;
   external?: boolean;
   download?: string;
 };
 
-function Channel({ href, icon, title, detail, external, download }: ChannelProps) {
+function Channel({ href, icon, title, detail, detailLabel, external, download }: ChannelProps) {
   return (
     <li>
       <a
@@ -173,7 +187,10 @@ function Channel({ href, icon, title, detail, external, download }: ChannelProps
             {external && <span className="sr-only"> (opens in a new tab)</span>}
             {download && <span className="sr-only"> (PDF download)</span>}
           </span>
-          <span className="mt-1 block text-small text-muted">{detail}</span>
+          <span className="mt-1 block text-small text-muted">
+            {detailLabel && <span className="sr-only">{detailLabel}: </span>}
+            {detail}
+          </span>
         </span>
         {download ? (
           <DownloadIcon className="mt-1 size-5 shrink-0 text-muted transition-transform group-hover:translate-y-0.5 group-hover:text-fg" />

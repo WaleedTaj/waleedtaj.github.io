@@ -1,15 +1,12 @@
-import Link from "next/link";
 import { PageTransition } from "@/components/layout/page-transition";
 import { Reveal } from "@/components/motion/reveal";
-import { toneStyle } from "@/components/projects/project-stage";
 import { ButtonLink } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
-import { ArrowRightIcon, ArrowUpRightIcon, GraduationIcon, MapPinIcon } from "@/components/ui/icons";
+import { ArrowRightIcon, GraduationIcon, MapPinIcon } from "@/components/ui/icons";
 import { PageIntro } from "@/components/ui/page-intro";
 import { ResumeButton } from "@/components/ui/resume-button";
 import { education } from "@/content/education";
 import { experience, formatMonth, type ExperienceEntry } from "@/content/experience";
-import { getProject, projectHref } from "@/content/projects";
 import { cn } from "@/lib/cn";
 import { pageMetadata } from "@/lib/metadata";
 
@@ -43,7 +40,7 @@ export default function ExperiencePage() {
           lead={
             <p>
               Full-time at Brainstormer Technologies, part-time with Dynamic Dev Technologies, and
-              freelance Flutter projects before that. Featured apps link to their case studies.
+              freelance Flutter projects before that.
             </p>
           }
           aside={
@@ -138,29 +135,11 @@ function Role({ entry, last }: { entry: ExperienceEntry; last: boolean }) {
         <div className="mt-8">
           <h3 className="text-eyebrow text-muted uppercase">{entry.appsLabel ?? "Applications"}</h3>
           <ul className="mt-3 flex flex-wrap gap-2">
-            {entry.apps.map((app) => {
-              const project = app.project && getProject(app.project);
-              if (!project) {
-                return (
-                  <li key={app.name} className="rounded-lg border border-line px-3 py-1.5 text-small font-semibold">
-                    {app.name}
-                  </li>
-                );
-              }
-              return (
-                <li key={app.name}>
-                  <Link
-                    href={projectHref(project.slug)}
-                    style={toneStyle(project)}
-                    className="tone inline-flex items-center gap-1.5 rounded-lg bg-tone-wash px-3 py-1.5 text-small font-semibold text-tone-ink ring-1 ring-tone/40 transition-shadow hover:ring-tone"
-                  >
-                    {app.name}
-                    <span className="sr-only"> case study</span>
-                    <ArrowUpRightIcon className="size-3.5" />
-                  </Link>
-                </li>
-              );
-            })}
+            {entry.apps.map((app) => (
+              <li key={app} className="rounded-lg border border-line px-3 py-1.5 text-small font-semibold">
+                {app}
+              </li>
+            ))}
           </ul>
         </div>
 

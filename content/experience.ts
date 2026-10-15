@@ -1,14 +1,6 @@
-import type { ProjectSlug } from "./projects";
-
 /**
  * Professional timeline, most recent first. Dates use "YYYY-MM".
  */
-
-export type ExperienceApp = {
-  name: string;
-  /** Set when the app has a featured case study. */
-  project?: ProjectSlug;
-};
 
 export type ExperienceEntry = {
   organization: string;
@@ -20,7 +12,8 @@ export type ExperienceEntry = {
   end: string | null;
   /** One-line framing for previews. */
   summary: string;
-  apps: ExperienceApp[];
+  /** App names, shown as plain text: not every app here is public. */
+  apps: string[];
   /** Label above the app list, e.g. "Applications include" for partial lists. */
   appsLabel?: string;
   highlights: string[];
@@ -36,13 +29,13 @@ export const experience: ExperienceEntry[] = [
     end: null,
     summary: "Developing and maintaining production apps for education, childcare, Islamic learning and AI story generation, among others.",
     apps: [
-      { name: "SLMS360", project: "slms360" },
-      { name: "SLMS360 Student" },
-      { name: "Toddlers App Staff", project: "toddlers-app-staff" },
-      { name: "Toddlers App" },
-      { name: "DeenLink", project: "deenlink" },
-      { name: "BloodSync" },
-      { name: "MyFable" },
+      "SLMS360",
+      "SLMS360 Student",
+      "Toddlers App Staff",
+      "Toddlers App",
+      "DeenLink",
+      "BloodSync",
+      "MyFable",
     ],
     highlights: [
       "Developed and maintained production Flutter applications.",
@@ -64,7 +57,7 @@ export const experience: ExperienceEntry[] = [
     start: "2026-02",
     end: "2026-08",
     summary: "Developed Flutter apps with role-based workflows, appointments and chat.",
-    apps: [{ name: "Service Square", project: "service-square" }, { name: "AzuNii Health" }, { name: "Lagoon Lounge" }],
+    apps: ["Service Square", "AzuNii Health", "Lagoon Lounge"],
     highlights: [
       "Developed and maintained Flutter applications.",
       "Implemented role-based application workflows.",
@@ -83,11 +76,11 @@ export const experience: ExperienceEntry[] = [
     summary: "Delivered Flutter apps and features to individual client requirements.",
     appsLabel: "Applications include",
     apps: [
-      { name: "Digital Car Yard" },
-      { name: "Dezoc" },
-      { name: "Notium" },
-      { name: "Weather App" },
-      { name: "Task Management" },
+      "Digital Car Yard",
+      "Dezoc",
+      "Notium",
+      "Weather App",
+      "Task Management",
     ],
     highlights: [
       "Developed Flutter applications for different client requirements.",

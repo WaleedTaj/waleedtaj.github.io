@@ -36,7 +36,14 @@ export const viewport: Viewport = {
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     // data-theme is set by ThemeScript before hydration, hence the warning suppression.
-    <html lang="en" className={`${manrope.variable} antialiased`} suppressHydrationWarning>
+    // data-scroll-behavior lets Next.js switch off the CSS smooth scrolling while it resets the
+    // scroll position on navigation; without it the reset animates and lands back near the old spot.
+    <html
+      lang="en"
+      data-scroll-behavior="smooth"
+      className={`${manrope.variable} antialiased`}
+      suppressHydrationWarning
+    >
       <head>
         <ThemeScript />
       </head>

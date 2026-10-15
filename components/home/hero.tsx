@@ -13,13 +13,14 @@ const current = experience.find((entry) => entry.end === null);
 
 const facts = [
   { value: site.experience.replace(" years", ""), label: "years building with Flutter" },
+  // "+": the lists behind these counts are not exhaustive.
   {
-    value: String(projects.length + publishedApps.length),
+    value: `${projects.length + publishedApps.length}+`,
     label: "published apps on Google Play and the App Store",
   },
   {
-    value: String(experience.reduce((total, entry) => total + entry.apps.length, 0)),
-    label: "apps worked on across full-time, part-time and freelance roles",
+    value: `${experience.reduce((total, entry) => total + entry.apps.length, 0)}+`,
+    label: "apps worked on overall, across full-time, part-time and freelance roles",
   },
 ];
 
@@ -28,8 +29,8 @@ export function Hero() {
     <section aria-labelledby="hero-title" className="relative overflow-hidden">
       <Container className="grid items-center gap-14 pt-12 pb-20 sm:pt-16 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.8fr)] lg:gap-12 lg:pt-20 lg:pb-24">
         <div>
-          <p className="animate-rise inline-flex items-center gap-2.5 rounded-full border border-line py-1.5 pr-3.5 pl-3 text-small font-semibold text-muted">
-            <span aria-hidden="true" className="size-2 rounded-full bg-accent-ink ring-4 ring-accent-wash" />
+          <p className="animate-rise inline-flex items-center gap-2.5 rounded-2xl border border-line py-1.5 pr-3.5 pl-3 text-small font-semibold text-muted">
+            <span aria-hidden="true" className="size-2 shrink-0 rounded-full bg-accent-ink ring-4 ring-accent-wash" />
             {site.availability}
           </p>
 

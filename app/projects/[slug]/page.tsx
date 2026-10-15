@@ -1,19 +1,17 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { ReactNode } from "react";
 import { PageTransition } from "@/components/layout/page-transition";
 import { Reveal } from "@/components/motion/reveal";
-import { mockupCaptions, mockupScreens } from "@/components/projects/mockups";
 import { PhoneFrame } from "@/components/projects/phone";
-import { MockupLabel, ProjectStage, toneStyle } from "@/components/projects/project-stage";
+import { ProjectStage, ScreenshotImage } from "@/components/projects/project-stage";
 import { StoreLinks } from "@/components/projects/store-links";
 import { Container } from "@/components/ui/container";
 import { ArrowLeftIcon, ArrowRightIcon, CheckIcon } from "@/components/ui/icons";
 import { riseDelay } from "@/components/ui/page-intro";
 import { adjacentProjects, getProject, projectHref, projects, type Project } from "@/content/projects";
-import { projectImages } from "@/lib/media";
+import { projectScreenshots } from "@/lib/media";
 import { pageMetadata } from "@/lib/metadata";
 
 // Only the four featured projects exist; anything else is a 404.
@@ -45,9 +43,9 @@ export default async function ProjectPage({ params }: PageProps<"/projects/[slug
 
   return (
     <PageTransition>
-      <article aria-labelledby="case-title" style={toneStyle(project)} className="tone">
+      <article aria-labelledby="case-title">
         {/* Hero */}
-        <header className="border-b border-line bg-tone-wash">
+        <header className="border-b border-line bg-surface">
           <Container className="grid gap-12 pt-10 pb-14 sm:pt-12 lg:grid-cols-12 lg:items-center lg:gap-14 lg:pb-20">
             <div className="lg:col-span-5">
               <nav aria-label="Breadcrumb" className="animate-rise">
@@ -59,13 +57,13 @@ export default async function ProjectPage({ params }: PageProps<"/projects/[slug
                     </Link>
                   </li>
                   <li aria-hidden="true">/</li>
-                  <li aria-current="page" className="font-mono text-tone-ink">
+                  <li aria-current="page" className="font-mono text-accent-ink">
                     {number}
                   </li>
                 </ol>
               </nav>
 
-              <p className="animate-rise mt-10 text-small font-semibold text-tone-ink" style={riseDelay(60)}>
+              <p className="animate-rise mt-10 text-small font-semibold text-accent-ink" style={riseDelay(60)}>
                 {project.category}
               </p>
               <h1 id="case-title" className="animate-rise mt-3 text-h1" style={riseDelay(100)}>
@@ -76,7 +74,7 @@ export default async function ProjectPage({ params }: PageProps<"/projects/[slug
               </p>
 
               <dl
-                className="animate-rise mt-8 grid grid-cols-2 gap-x-6 gap-y-4 border-t border-tone/30 pt-6 text-small"
+                className="animate-rise mt-8 grid grid-cols-2 gap-x-6 gap-y-4 border-t border-line pt-6 text-small"
                 style={riseDelay(200)}
               >
                 <div>
@@ -93,7 +91,7 @@ export default async function ProjectPage({ params }: PageProps<"/projects/[slug
             </div>
 
             <div className="animate-rise lg:col-span-7" style={riseDelay(120)}>
-              <ProjectStage project={project} preload className="bg-bg/60" />
+              <ProjectStage project={project} preload className="bg-bg" />
             </div>
           </Container>
         </header>
@@ -105,8 +103,8 @@ export default async function ProjectPage({ params }: PageProps<"/projects/[slug
               <p key={paragraph}>{paragraph}</p>
             ))}
           </div>
-          <blockquote className="mt-10 border-l-2 border-tone py-1 pl-6">
-            <p className="text-eyebrow text-tone-ink uppercase">What this case study shows</p>
+          <blockquote className="mt-10 border-l-2 border-accent py-1 pl-6">
+            <p className="text-eyebrow text-accent-ink uppercase">What this case study shows</p>
             <p className="mt-3 text-h3 font-semibold text-fg">{project.focus}</p>
           </blockquote>
         </CaseSection>
@@ -116,7 +114,7 @@ export default async function ProjectPage({ params }: PageProps<"/projects/[slug
           <ul className="grid gap-x-8 gap-y-3 sm:grid-cols-2">
             {project.contributions.map((item) => (
               <li key={item} className="flex items-start gap-3 border-b border-line pb-3 font-medium">
-                <CheckIcon className="mt-1 size-4 shrink-0 text-tone-ink" />
+                <CheckIcon className="mt-1 size-4 shrink-0 text-accent-ink" />
                 {item}
               </li>
             ))}
@@ -128,7 +126,7 @@ export default async function ProjectPage({ params }: PageProps<"/projects/[slug
           <ul className="grid grid-cols-1 gap-3 min-[30rem]:grid-cols-2 md:grid-cols-3">
             {project.features.map((feature, index) => (
               <li key={feature} className="flex items-center gap-3 rounded-control border border-line bg-bg px-4 py-3.5">
-                <span aria-hidden="true" className="font-mono text-[0.75rem] text-tone-ink">
+                <span aria-hidden="true" className="font-mono text-[0.75rem] text-accent-ink">
                   {String(index + 1).padStart(2, "0")}
                 </span>
                 <span className="font-semibold">{feature}</span>
@@ -142,7 +140,7 @@ export default async function ProjectPage({ params }: PageProps<"/projects/[slug
           <ol className="space-y-10">
             {project.challenges.map((challenge, index) => (
               <li key={challenge.title} className="grid gap-4 sm:grid-cols-[4.5rem_1fr]">
-                <span aria-hidden="true" className="text-h1 leading-none font-extrabold text-tone/70">
+                <span aria-hidden="true" className="text-h1 leading-none font-extrabold text-accent-ink/50">
                   {String(index + 1).padStart(2, "0")}
                 </span>
                 <div>
@@ -157,8 +155,8 @@ export default async function ProjectPage({ params }: PageProps<"/projects/[slug
         {/* Outcome */}
         {project.outcome && (
           <CaseSection label="Outcome">
-            <div className="grid gap-6 rounded-panel bg-tone-wash p-8 ring-1 ring-line sm:grid-cols-[auto_1fr] sm:items-center sm:gap-10 sm:p-10">
-              <p className="text-[clamp(3.5rem,2.5rem+4vw,5.5rem)] leading-none font-extrabold tracking-tight text-tone-ink">
+            <div className="grid gap-6 rounded-panel bg-accent-wash p-8 ring-1 ring-line sm:grid-cols-[auto_1fr] sm:items-center sm:gap-10 sm:p-10">
+              <p className="text-[clamp(3.5rem,2.5rem+4vw,5.5rem)] leading-none font-extrabold tracking-tight text-accent-ink">
                 {project.outcome.value}
               </p>
               <div>
@@ -224,7 +222,7 @@ function CaseSection({
     <section aria-labelledby={id} className={className}>
       <Container className="grid gap-8 py-16 sm:py-20 lg:grid-cols-12 lg:gap-14">
         <div className="lg:col-span-4">
-          <p className="text-eyebrow text-tone-ink uppercase">{label}</p>
+          <p className="text-eyebrow text-accent-ink uppercase">{label}</p>
           <h2 id={id} className="mt-3 text-h2">
             {title ?? label}
           </h2>
@@ -246,7 +244,7 @@ function ChipRow({ term, items, strong }: { term: string; items: string[]; stron
               key={item}
               className={
                 strong
-                  ? "rounded-lg bg-tone-ink px-3 py-1.5 text-small font-semibold text-bg"
+                  ? "rounded-lg bg-accent px-3 py-1.5 text-small font-semibold text-on-accent"
                   : "rounded-lg border border-line px-3 py-1.5 text-small font-medium"
               }
             >
@@ -260,56 +258,19 @@ function ChipRow({ term, items, strong }: { term: string; items: string[]; stron
 }
 
 function Gallery({ project }: { project: Project }) {
-  const screenshots = projectImages[project.slug]?.screenshots ?? [];
-
-  if (screenshots.length > 0) {
-    return (
-      <ul className="grid grid-cols-2 gap-6 md:grid-cols-3">
-        {screenshots.map((shot) => (
-          <li key={shot.src}>
-            <PhoneFrame>
-              <Image
-                src={shot.src}
-                alt={shot.alt}
-                width={shot.width}
-                height={shot.height}
-                sizes="(min-width: 768px) 18rem, 45vw"
-                className="size-full object-cover object-top"
-              />
-            </PhoneFrame>
-          </li>
-        ))}
-      </ul>
-    );
-  }
-
-  const screens = mockupScreens[project.slug];
-  const captions = mockupCaptions[project.slug];
-
   return (
-    <>
-      <p className="flex flex-wrap items-center gap-3 text-muted">
-        <MockupLabel />
-        Real screenshots are on the way. Until then, these sketches show the kind of screens the app has.
-      </p>
-      <ul className="mt-8 grid grid-cols-2 gap-5 sm:gap-8">
-        {screens.map((Screen, index) => (
-          <li key={captions[index]}>
-            <figure>
-              <div aria-hidden="true" className="mx-auto max-w-[17rem]">
-                <PhoneFrame>
-                  <Screen />
-                </PhoneFrame>
-              </div>
-              <figcaption className="mt-4 text-center text-small font-semibold text-muted">
-                {captions[index]}
-                <span className="sr-only"> (illustrative mockup)</span>
-              </figcaption>
-            </figure>
-          </li>
-        ))}
-      </ul>
-    </>
+    <ul className="grid grid-cols-2 gap-x-5 gap-y-10 sm:gap-x-8">
+      {projectScreenshots[project.slug].map((shot) => (
+        <li key={shot.src}>
+          <figure>
+            <PhoneFrame className="mx-auto max-w-[17rem]">
+              <ScreenshotImage shot={shot} sizes="(min-width: 640px) 17rem, 45vw" />
+            </PhoneFrame>
+            <figcaption className="mt-4 text-center text-small font-semibold text-muted">{shot.caption}</figcaption>
+          </figure>
+        </li>
+      ))}
+    </ul>
   );
 }
 
@@ -318,8 +279,7 @@ function AdjacentLink({ project, direction }: { project: Project; direction: "pr
   return (
     <Link
       href={projectHref(project.slug)}
-      style={toneStyle(project)}
-      className={`tone group flex flex-col gap-2 rounded-panel border border-line p-6 transition-colors hover:border-tone hover:bg-tone-wash sm:p-8 ${isNext ? "sm:items-end sm:text-right" : ""}`}
+      className={`group flex flex-col gap-2 rounded-panel border border-line p-6 transition-colors hover:border-accent-ink/40 hover:bg-accent-wash sm:p-8 ${isNext ? "sm:items-end sm:text-right" : ""}`}
     >
       <span className="inline-flex items-center gap-2 text-small font-semibold text-muted">
         {!isNext && <ArrowLeftIcon className="size-4 transition-transform group-hover:-translate-x-0.5" />}
@@ -327,7 +287,7 @@ function AdjacentLink({ project, direction }: { project: Project; direction: "pr
         {isNext && <ArrowRightIcon className="size-4 transition-transform group-hover:translate-x-0.5" />}
       </span>
       <span className="text-h3 font-bold">{project.name}</span>
-      <span className="text-small text-tone-ink">{project.category}</span>
+      <span className="text-small text-accent-ink">{project.category}</span>
     </Link>
   );
 }

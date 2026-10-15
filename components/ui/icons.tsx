@@ -80,6 +80,19 @@ export function MailIcon(props: IconProps) {
   );
 }
 
+/** Speech bubble with a handset, in the style of the WhatsApp mark. */
+export function WhatsAppIcon(props: IconProps) {
+  return (
+    <StrokeIcon {...props}>
+      <path d="M3.5 20.5 4.9 16.4A8.5 8.5 0 1 1 7.6 19.1Z" />
+      <path
+        strokeWidth={1.5}
+        d="M9.3 8.4c.3-.4.7-.5 1-.4l.4.1.8 1.9-.8.9c.5 1.1 1.3 1.9 2.4 2.4l.9-.8 1.9.8.1.4c.1.3 0 .7-.4 1-.9.7-2.7.4-4.4-1.3S8.6 9.3 9.3 8.4Z"
+      />
+    </StrokeIcon>
+  );
+}
+
 export function LinkedInIcon(props: IconProps) {
   return (
     <StrokeIcon {...props}>

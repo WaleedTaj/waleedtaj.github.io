@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { PageTransition } from "@/components/layout/page-transition";
 import { Reveal } from "@/components/motion/reveal";
-import { ProjectStage, toneStyle } from "@/components/projects/project-stage";
+import { ProjectStage } from "@/components/projects/project-stage";
 import { StoreLinks } from "@/components/projects/store-links";
 import { buttonStyles } from "@/components/ui/button";
 import { Container } from "@/components/ui/container";
@@ -72,11 +72,7 @@ function ProjectFeature({ project, index }: { project: Project; index: number })
   const href = projectHref(project.slug);
 
   return (
-    <article
-      aria-labelledby={headingId}
-      style={toneStyle(project)}
-      className="tone grid items-center gap-10 lg:grid-cols-12 lg:gap-14"
-    >
+    <article aria-labelledby={headingId} className="grid items-center gap-10 lg:grid-cols-12 lg:gap-14">
       <Reveal className={cn("lg:col-span-7", flipped && "lg:order-2")}>
         <Link href={href} tabIndex={-1} aria-hidden="true" className="group block">
           <ProjectStage
@@ -89,14 +85,14 @@ function ProjectFeature({ project, index }: { project: Project; index: number })
 
       <Reveal delay={0.08} className={cn("lg:col-span-5", flipped && "lg:order-1")}>
         <div className="flex items-baseline gap-4">
-          <span aria-hidden="true" className="font-mono text-small font-semibold text-tone-ink">
+          <span aria-hidden="true" className="font-mono text-small font-semibold text-accent-ink">
             {String(index + 1).padStart(2, "0")}
           </span>
           <span className="h-px flex-1 bg-line" aria-hidden="true" />
           <span className="text-small font-semibold text-muted">{project.platforms.join(" · ")}</span>
         </div>
 
-        <p className="mt-6 text-small font-semibold text-tone-ink">{project.category}</p>
+        <p className="mt-6 text-small font-semibold text-accent-ink">{project.category}</p>
         <h2 id={headingId} className="mt-2 text-h2">
           {project.name}
         </h2>
@@ -104,14 +100,14 @@ function ProjectFeature({ project, index }: { project: Project; index: number })
 
         <ul aria-label="Highlights" className="mt-6 flex flex-wrap gap-2">
           {project.features.slice(0, 4).map((feature) => (
-            <li key={feature} className="rounded-lg bg-tone-wash px-2.5 py-1 text-small font-medium text-fg ring-1 ring-line">
+            <li key={feature} className="rounded-lg bg-accent-wash px-2.5 py-1 text-small font-medium text-fg ring-1 ring-line">
               {feature}
             </li>
           ))}
         </ul>
 
         {project.outcome && (
-          <p className="mt-6 flex items-baseline gap-3 border-l-2 border-tone pl-4">
+          <p className="mt-6 flex items-baseline gap-3 border-l-2 border-accent pl-4">
             <span className="text-h3 font-extrabold">{project.outcome.value}</span>
             <span className="text-small text-muted">{project.outcome.label.toLowerCase()} (approximate)</span>
           </p>

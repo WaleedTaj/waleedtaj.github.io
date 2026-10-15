@@ -13,10 +13,17 @@ export const site = {
   url: "https://waleedtaj.github.io",
   description:
     "Waleed Mehmood is a Flutter developer in Lahore, Pakistan, with 3+ years of experience building, publishing and maintaining Android and iOS apps.",
-  /** Short availability line. Keep it general unless something is confirmed. */
-  availability: "Open to Flutter development opportunities",
+  /** Short availability line for the About hero. */
+  availability: "Open to on-site, hybrid and remote roles",
+  /** The full statement, shown once on the Contact page. */
+  workPreference: "Open to on-site, hybrid and remote roles, including relocation for the right opportunity.",
   email: "waleedtaj420@gmail.com",
   github: { label: "GitHub", handle: "WaleedTaj", href: "https://github.com/WaleedTaj" },
+  whatsapp: {
+    label: "WhatsApp",
+    display: "+92 313 4478862",
+    href: "https://wa.me/923134478862",
+  },
   linkedin: {
     label: "LinkedIn",
     handle: "waleed-mehmood",

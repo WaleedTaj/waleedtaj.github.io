@@ -1,7 +1,7 @@
 /**
  * Featured projects and their case studies. Everything here comes from
  * verified project information; leave optional fields out rather than guess.
- * Images live in lib/media.ts (`projectImages`), keyed by the same slug.
+ * Screenshots live in lib/media.ts (`projectScreenshots`), keyed by the same slug.
  */
 
 export type ProjectSlug = "slms360" | "toddlers-app-staff" | "deenlink" | "service-square";
@@ -41,11 +41,6 @@ export type Project = {
   /** Problem areas the work covered, drawn from the features and contributions. */
   areas: string[];
   store: StoreLinks;
-  /**
-   * Visual identity for the illustrative mockups. `hue` is an OKLCH hue
-   * angle; the CSS derives readable tints from it in both themes.
-   */
-  hue: number;
 };
 
 export const projects: Project[] = [
@@ -105,7 +100,6 @@ export const projects: Project[] = [
       googlePlay: "https://play.google.com/store/apps/details?id=com.brainstormer.slms360_management_app",
       appStore: "https://apps.apple.com/us/app/slms-360/id6740049911",
     },
-    hue: 264,
   },
   {
     slug: "toddlers-app-staff",
@@ -162,7 +156,6 @@ export const projects: Project[] = [
       googlePlay: "https://play.google.com/store/apps/details?id=com.brainstormers.toddlersStaff",
       appStore: "https://apps.apple.com/om/app/toddlersapp-staff/id6744242178",
     },
-    hue: 32,
   },
   {
     slug: "deenlink",
@@ -222,7 +215,6 @@ export const projects: Project[] = [
       googlePlay: "https://play.google.com/store/apps/details?id=com.brainstormer.deenlink",
       appStore: "https://apps.apple.com/us/app/deenlink-my-duas/id6753102883",
     },
-    hue: 165,
   },
   {
     slug: "service-square",
@@ -278,7 +270,6 @@ export const projects: Project[] = [
       googlePlay: "https://play.google.com/store/apps/details?id=co.nannysquare.app",
       appStore: "https://apps.apple.com/ng/app/services-square/id6777226346",
     },
-    hue: 300,
   },
 ];
 

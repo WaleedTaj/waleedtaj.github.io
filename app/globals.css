@@ -38,13 +38,6 @@
   --elevation-1: 0 1px 2px rgb(0 0 0 / 0.04), 0 8px 24px -12px rgb(0 0 0 / 0.12);
   --elevation-2: 0 2px 4px rgb(0 0 0 / 0.04), 0 16px 32px -12px rgb(0 0 0 / 0.16);
   --header-bg: rgb(255 255 255 / 0.85);
-
-  /* Project tones: lightness/chroma per theme; the hue comes from the project */
-  --tone-solid-l: 0.62;
-  --tone-ink-l: 0.46;
-  --tone-soft-l: 0.9;
-  --tone-wash-l: 0.965;
-  --tone-deep-l: 0.32;
 }
 
 /* Dark theme values. Duplicated for the two selectors below because CSS has
@@ -68,11 +61,6 @@
     --elevation-1: 0 8px 24px -8px rgb(0 0 0 / 0.5);
     --elevation-2: 0 16px 40px -12px rgb(0 0 0 / 0.6);
     --header-bg: rgb(30 30 31 / 0.85);
-    --tone-solid-l: 0.68;
-    --tone-ink-l: 0.84;
-    --tone-soft-l: 0.36;
-    --tone-wash-l: 0.24;
-    --tone-deep-l: 0.88;
   }
 }
 
@@ -91,11 +79,6 @@
   --elevation-1: 0 8px 24px -8px rgb(0 0 0 / 0.5);
   --elevation-2: 0 16px 40px -12px rgb(0 0 0 / 0.6);
   --header-bg: rgb(30 30 31 / 0.85);
-  --tone-solid-l: 0.68;
-  --tone-ink-l: 0.84;
-  --tone-soft-l: 0.36;
-  --tone-wash-l: 0.24;
-  --tone-deep-l: 0.88;
 }
 
 /* `dark:` follows the resolved theme set on <html> by the theme script */
@@ -119,14 +102,7 @@
   --color-accent-wash: var(--accent-wash);
   --color-on-accent: var(--on-accent);
 
-  /* Per-project tones, available inside a `tone` element */
-  --color-tone: var(--tone);
-  --color-tone-ink: var(--tone-ink);
-  --color-tone-soft: var(--tone-soft);
-  --color-tone-wash: var(--tone-wash);
-  --color-tone-deep: var(--tone-deep);
-  --color-tone-night: var(--tone-night);
-  /* Fixed white for text on saturated tone fills in mockups */
+  /* Fixed white, e.g. behind the portrait photo */
   --color-white: #ffffff;
 
   --font-sans: var(--font-manrope), ui-sans-serif, system-ui, sans-serif;
@@ -225,19 +201,6 @@
   background-image: radial-gradient(var(--line-strong) 1px, transparent 1px);
   background-size: 20px 20px;
   background-position: center;
-}
-
-/* Project color identity. Set --hue (an OKLCH hue angle) inline on the same
-   element; descendants can then use bg-tone, text-tone-ink, bg-tone-wash…
-   Only used for illustrative mockups and project accents. */
-@utility tone {
-  --tone: oklch(var(--tone-solid-l) 0.15 var(--hue, 85));
-  --tone-ink: oklch(var(--tone-ink-l) 0.13 var(--hue, 85));
-  --tone-soft: oklch(var(--tone-soft-l) 0.06 var(--hue, 85));
-  --tone-wash: oklch(var(--tone-wash-l) 0.025 var(--hue, 85));
-  --tone-deep: oklch(var(--tone-deep-l) 0.08 var(--hue, 85));
-  /* Stays dark in both themes, for always-dark surfaces such as a scanner */
-  --tone-night: oklch(0.25 0.06 var(--hue, 85));
 }
 
 /* Hero entrance: pure CSS so the headline renders without waiting for JS.
