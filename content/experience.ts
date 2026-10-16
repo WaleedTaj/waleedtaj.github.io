@@ -29,6 +29,7 @@ export const experience: ExperienceEntry[] = [
     end: null,
     summary: "Developing and maintaining production apps for education, childcare, Islamic learning and AI story generation, among others.",
     apps: [
+      "Opsyra",
       "SLMS360",
       "SLMS360 Student",
       "Toddlers App Staff",

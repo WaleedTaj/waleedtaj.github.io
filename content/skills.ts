@@ -79,6 +79,7 @@ export const skillGroups: SkillGroup[] = [
     description: "From the editor to the stores, and keeping things fast and stable along the way.",
     icon: "tools",
     skills: [
+      "Productivity & AI Tools",
       "Git",
       "GitHub",
       "Android Studio",

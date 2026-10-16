@@ -23,10 +23,10 @@ export function publicPath(path: string) {
 export const media = {
   /** Real photograph, used on the About page (/) and as the social preview image. */
   portrait: {
-    src: publicPath("/images/Profile Pic White BG.jpeg"),
+    src: publicPath("/images/Profile Pic White BG.jpg"),
     alt: "Portrait of Waleed Mehmood",
-    width: 1254,
-    height: 1254,
+    width: 1024,
+    height: 1024,
   } satisfies ImageAsset,
 
   resume: {
@@ -41,13 +41,13 @@ export type Screenshot = ImageAsset & {
   caption: string;
 };
 
-/** Phone screenshots at their original 540 × 1200. */
-const shot = (folder: string, file: string, caption: string, alt: string): Screenshot => ({
+/** Phone screenshots, 540 × 1200 unless the capture is larger (same 9:20 shape). */
+const shot = (folder: string, file: string, caption: string, alt: string, width = 540, height = 1200): Screenshot => ({
   src: publicPath(`/images/${folder}/${file}`),
   alt,
   caption,
-  width: 540,
-  height: 1200,
+  width,
+  height,
 });
 
 /**
@@ -79,5 +79,11 @@ export const projectScreenshots: Record<ProjectSlug, Screenshot[]> = {
     shot("Blood Sync", "User Selection.jpeg", "Donor or seeker", "BloodSync screen for choosing to become a donor or look for a donor"),
     shot("Blood Sync", "Drawer.jpeg", "Menu", "BloodSync menu with profile, my requests, become a donor and instructions"),
     shot("Blood Sync", "Instructions.jpeg", "Instructions", "BloodSync blood donation instructions covering responsibilities, principles and materials"),
+  ],
+  opsyra: [
+    shot("Opsyra", "Home.jpeg", "Home", "Opsyra home screen with today's shift, a clock-in button, quick actions, tasks and the latest payslip"),
+    shot("Opsyra", "Schedule.jpeg", "Schedule", "Opsyra monthly schedule with shifts, client visits and holidays, working hours and the day's shift"),
+    shot("Opsyra", "Pay.jpeg", "Pay", "Opsyra pay screen with monthly take-home, gross and deductions, payslips and bank details", 688, 1529),
+    shot("Opsyra", "Splash.jpeg", "Splash", "Opsyra splash screen: attendance, leave and schedule for staff", 1080, 2400),
   ],
 };

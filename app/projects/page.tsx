@@ -13,7 +13,7 @@ import { pageMetadata } from "@/lib/metadata";
 export const metadata = pageMetadata({
   title: "Projects",
   description:
-    "Flutter apps by Waleed Mehmood on Google Play and the App Store: case studies of SLMS360, Toddlers App Staff, DeenLink and BloodSync, plus SLMS360 Student, Toddlers App, Service Square and MyFable.",
+    "Flutter apps by Waleed Mehmood on Google Play and the App Store: case studies of SLMS360, Toddlers App Staff, DeenLink, BloodSync and Opsyra, plus SLMS360 Student, Toddlers App, Service Square and MyFable.",
   path: "/projects",
 });
 
@@ -26,11 +26,11 @@ export default function ProjectsPage() {
         <PageIntro
           folio="03"
           label="Projects"
-          title="Four apps, four very different problems."
+          title="Five apps, five very different problems."
           lead={
             <p>
-              Institutional operations, childcare, offline religious content and blood donation. Each
-              case study covers what the app does, what I worked on and the technical
+              Institutional operations, childcare, offline religious content, blood donation and
+              workforce management. Each case study covers what the app does, what I worked on and the technical
               challenges along the way.
             </p>
           }

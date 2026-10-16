@@ -12,7 +12,7 @@ import { riseDelay } from "@/components/ui/page-intro";
 import { adjacentProjects, getProject, projectHref, projects, type Project } from "@/content/projects";
 import { pageMetadata } from "@/lib/metadata";
 
-// Only the four featured projects exist; anything else is a 404.
+// Only the featured projects exist; anything else is a 404.
 export const dynamicParams = false;
 
 export function generateStaticParams() {

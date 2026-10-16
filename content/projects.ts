@@ -4,7 +4,7 @@
  * Screenshots live in lib/media.ts (`projectScreenshots`), keyed by the same slug.
  */
 
-export type ProjectSlug = "slms360" | "toddlers-app-staff" | "deenlink" | "bloodsync";
+export type ProjectSlug = "slms360" | "toddlers-app-staff" | "deenlink" | "bloodsync" | "opsyra";
 
 export type Challenge = {
   title: string;
@@ -270,6 +270,63 @@ export const projects: Project[] = [
     store: {
       googlePlay: "https://play.google.com/store/apps/details?id=com.brainstormertech.blood_sync",
       appStore: "https://apps.apple.com/us/app/blood-sync-app/id6754638842",
+    },
+  },
+  {
+    slug: "opsyra",
+    name: "Opsyra",
+    category: "Workforce Management · SaaS",
+    platforms: ["Android", "iOS"],
+    company: "Brainstormer Technologies",
+    summary:
+      "An employee workforce management app that brings attendance, shifts, client visits, tasks and payroll into one mobile experience.",
+    overview: [
+      "Opsyra helps organizations and their employees manage attendance, shifts, client visits, operational tasks and payroll information in one app. Employees clock in and out with GPS verification, check their monthly shift calendar, work through onboarding and operational checklists, and view salary breakdowns and digital payslips.",
+      "It is built for different ways of working: office-based employees on fixed schedules, staff on rotating shifts, and field workers who visit clients and need their schedules, visits and HR information on the go. Organizations give their people access through a company code.",
+    ],
+    focus:
+      "Location-verified, schedule-driven workflows for very different kinds of employees, from fixed office hours to field visits, in one app.",
+    features: [
+      "GPS-verified clock-in and clock-out",
+      "Location-based attendance verification",
+      "Monthly attendance records",
+      "Attendance correction requests",
+      "Scheduled client visits",
+      "Location-verified visit check-in and check-out",
+      "Monthly shift calendar",
+      "Onboarding and offboarding tasks",
+      "Salary breakdowns and digital payslips",
+      "Company-code sign-in",
+    ],
+    contributions: [
+      "Flutter mobile development",
+      "Attendance and clock-in flows",
+      "Client visit check-in and check-out",
+      "Shift schedule calendar",
+      "Task and checklist screens",
+      "Payroll and payslip screens",
+      "Company-code sign-in",
+      "UI development",
+    ],
+    challenges: [
+      {
+        title: "Location-verified attendance",
+        body: "Clock-ins and client-visit check-ins depend on where the employee is, so these flows have to confirm the location on both Android and iOS before time is recorded.",
+      },
+      {
+        title: "Different ways of working",
+        body: "Office staff, rotating shifts and field workers each have their own schedules, visits and attendance patterns, so the same screens have to work for fixed hours, shift rotations and days spent on the road.",
+      },
+      {
+        title: "HR information on a phone",
+        body: "Payslips, salary breakdowns, payroll queries and task deadlines carry a lot of detail, so they have to stay clear and easy to scan on a small screen.",
+      },
+    ],
+    stack: ["Flutter", "Dart"],
+    areas: ["Location-verified attendance", "Shift scheduling", "Field visits", "Payroll"],
+    store: {
+      googlePlay: "https://play.google.com/store/apps/details?id=com.brainstormer.opsyraapp",
+      appStore: "https://apps.apple.com/mo/app/opsyra/id6823377079?l=en-GB",
     },
   },
 ];
